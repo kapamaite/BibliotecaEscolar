@@ -24,14 +24,15 @@ public class MenuFrame extends JFrame {
         if (usuario.esBibliotecario()) {
             pestanas.addTab("Estudiantes", new EstudiantePanel());
         }
-        pestanas.addTab("Préstamos y devoluciones", crearPanelTemporal("Préstamos y devoluciones"));
+        PrestamoPanel prestamoPanel = new PrestamoPanel(usuario);
+        pestanas.addTab("Préstamos y devoluciones", prestamoPanel);
         if (usuario.esBibliotecario()) {
             pestanas.addTab("Reportes", crearPanelTemporal("Reportes"));
         }
         pestanas.addChangeListener(e -> {
-            if (pestanas.getSelectedComponent() == libroPanel) {
-                libroPanel.recargar();
-            }
+            Component seleccionado = pestanas.getSelectedComponent();
+            if (seleccionado == libroPanel) libroPanel.recargar();
+            if (seleccionado == prestamoPanel) prestamoPanel.recargar();
         });
         // Barra superior con el usuario y el botón de cerrar sesión
         JButton btnSalir = new JButton("Cerrar sesión");

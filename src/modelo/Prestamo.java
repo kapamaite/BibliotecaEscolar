@@ -38,4 +38,9 @@ public class Prestamo {
     public boolean estaAtrasado() {
         return !devuelto && fechaDevolucion != null && LocalDate.now().isAfter(fechaDevolucion);
     }
+    // Días de atraso (0 si no está atrasado)
+    public long diasAtraso() {
+        if (!estaAtrasado()) return 0;
+        return java.time.temporal.ChronoUnit.DAYS.between(fechaDevolucion, LocalDate.now());
+    }
 }

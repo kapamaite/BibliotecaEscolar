@@ -13,7 +13,7 @@ import java.time.temporal.ChronoUnit;
 
 public class PrestamoService {
 
-    private static final int DIAS_PRESTAMO = 7;
+    public static final int DIAS_PRESTAMO = 7;
 
     private static final LibroDAO libroDAO = new LibroDAO();
     private static final PrestamoDAO prestamoDAO = new PrestamoDAO();
