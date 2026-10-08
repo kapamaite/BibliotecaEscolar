@@ -19,15 +19,20 @@ public class MenuFrame extends JFrame {
 
         // Pestañas: el bibliotecario ve todo; el estudiante solo libros y préstamos
         JTabbedPane pestanas = new JTabbedPane();
-        pestanas.addTab("Libros", crearPanelTemporal("Gestión de libros"));
+        LibroPanel libroPanel = new LibroPanel(usuario);
+        pestanas.addTab("Libros", libroPanel);
         if (usuario.esBibliotecario()) {
-            pestanas.addTab("Estudiantes", crearPanelTemporal("Gestión de estudiantes"));
+            pestanas.addTab("Estudiantes", new EstudiantePanel());
         }
         pestanas.addTab("Préstamos y devoluciones", crearPanelTemporal("Préstamos y devoluciones"));
         if (usuario.esBibliotecario()) {
             pestanas.addTab("Reportes", crearPanelTemporal("Reportes"));
         }
-
+        pestanas.addChangeListener(e -> {
+            if (pestanas.getSelectedComponent() == libroPanel) {
+                libroPanel.recargar();
+            }
+        });
         // Barra superior con el usuario y el botón de cerrar sesión
         JButton btnSalir = new JButton("Cerrar sesión");
         btnSalir.addActionListener(e -> {

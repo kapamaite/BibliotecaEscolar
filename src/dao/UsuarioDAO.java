@@ -28,7 +28,18 @@ public class UsuarioDAO {
         }
         return null;
     }
-
+    public Usuario buscarPorCorreo(String correo) throws SQLException {
+        String sql = "SELECT id, nombre, rut, correo, `contraseña`, rol FROM usuarios WHERE correo = ?";
+        try (PreparedStatement ps = getConexion().prepareStatement(sql)) {
+            ps.setString(1, correo);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return armarUsuario(rs);
+                }
+            }
+        }
+        return null;
+    }
     public void insertar(Usuario u) throws SQLException {
         String sql = "INSERT INTO usuarios (nombre, rut, correo, `contraseña`, rol) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement ps = getConexion().prepareStatement(sql)) {
